@@ -1,0 +1,238 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap');
+
+:root {
+  --font-display: 'Cormorant Garamond';
+  --font-body: 'DM Sans';
+  --font-mono: 'Space Mono';
+
+  /* Nimori Palette */
+  --void: #05030f;
+  --deep: #0a0520;
+  --dusk: #130a2e;
+  --nebula: #1e0f45;
+  --violet: #3d1a78;
+  --amethyst: #6b35c8;
+  --lavender: #9b6ee8;
+  --lilac: #c4a0f5;
+  --rose: #ff6eb4;
+  --bloom: #ff9ed8;
+  --aqua: #4fc3f7;
+  --teal: #26c6da;
+  --gold: #ffd54f;
+  --ember: #ff8a65;
+
+  /* Emotional States */
+  --emotion-calm: #4fc3f7;
+  --emotion-joy: #ffd54f;
+  --emotion-melancholy: #6b35c8;
+  --emotion-love: #ff6eb4;
+  --emotion-wonder: #c4a0f5;
+  --emotion-peace: #26c6da;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--void);
+  color: #e8d5ff;
+  font-family: var(--font-body), sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Custom Cursor ── */
+.cursor {
+  width: 12px;
+  height: 12px;
+  background: var(--rose);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen;
+  transition: transform 0.1s ease, opacity 0.2s ease;
+  filter: blur(1px);
+}
+
+.cursor-trail {
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(155, 110, 232, 0.4);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--amethyst);
+  border-radius: 2px;
+}
+
+/* ── Glass Morphism ── */
+.glass {
+  background: rgba(30, 15, 69, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(155, 110, 232, 0.15);
+}
+
+.glass-rose {
+  background: rgba(255, 110, 180, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 110, 180, 0.2);
+}
+
+/* ── Glow Text ── */
+.text-glow {
+  text-shadow: 0 0 20px rgba(196, 160, 245, 0.8), 0 0 40px rgba(196, 160, 245, 0.4);
+}
+
+.text-glow-rose {
+  text-shadow: 0 0 20px rgba(255, 110, 180, 0.8), 0 0 40px rgba(255, 110, 180, 0.4);
+}
+
+/* ── Noise Texture Overlay ── */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+}
+
+/* ── Gradient Backgrounds ── */
+.bg-nebula {
+  background: radial-gradient(ellipse at 20% 50%, rgba(107,53,200,0.3) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(255,110,180,0.2) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 100%, rgba(79,195,247,0.15) 0%, transparent 60%),
+              var(--void);
+}
+
+.bg-sanctuary {
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(61,26,120,0.6) 0%, var(--void) 70%);
+}
+
+/* ── Module Cards ── */
+.module-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+.module-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.module-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* ── Particle Layer ── */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat var(--duration, 8s) var(--delay, 0s) ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(var(--tx, 20px), var(--ty, -30px)) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* ── Shimmer Effect ── */
+.shimmer-text {
+  background: linear-gradient(90deg,
+    var(--lilac) 0%,
+    var(--bloom) 25%,
+    var(--aqua) 50%,
+    var(--bloom) 75%,
+    var(--lilac) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: -200% center; }
+}
+
+/* ── Breathing Ring ── */
+.breathing-ring {
+  border-radius: 50%;
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ── Selection ── */
+::selection {
+  background: rgba(107, 53, 200, 0.4);
+  color: #fff;
+}
+
+/* ── Focus ── */
+*:focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Transitions ── */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
