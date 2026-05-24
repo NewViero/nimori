@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false, // Desactiva la optimización de CSS para evitar problemas con estilos dinámicos
   },
 }
 
